@@ -1,0 +1,26 @@
+download from http://mxr.mozilla.org/mozilla-central/source/netwerk/dns/effective_tld_names.dat?raw=1
+
+
+The specification
+
+1. The list is a set of rules, with one rule per line.
+2. Each line is only read up to the first whitespace; entire lines can also be commented using //.
+3. Each line which is not entirely whitespace or begins with a comment contains a rule.
+4. Each rule lists a public suffix, with the subdomain portions separated by dots (.) as usual. A leading dot is optional.
+5. The wildcard character * (asterisk) matches any valid sequence of characters in a hostname part. (Note: the list uses Unicode, not Punycode forms, and is encoded using UTF-8.)
+6. Wildcards may only be used to wildcard an entire level. That is, they must be surrounded by dots (or implicit dots, at the beginning of a line).
+7. If a hostname matches more than one rule in the file, the longest matching rule (the one with the most levels) will be used.
+8. An exclamation mark (!) at the start of a rule marks an exception to a previous wildcard rule. An exception rule takes priority over any other matching rule.
+
+
+Algorithm
+
+1. Match domain against all rules and take note of the matching ones.
+2. If no rules match, the prevailing rule is "*".
+3. If more than one rule matches, the prevailing rule is the one which is an exception rule.
+4. If there is no matching exception rule, the prevailing rule is the one with the most labels.
+5. If the prevailing rule is a exception rule, modify it by removing the leftmost label.
+6. The public suffix is the set of labels from the domain which directly match the labels of the prevailing rule (joined by dots).
+7. The registered or registrable domain is the public suffix plus one additional label.
+
+See also: http://publicsuffix.org/list/

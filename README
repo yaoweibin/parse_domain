@@ -1,0 +1,11 @@
+
+
+This C libary contains the full feature to parse the domain
+
+Usage:
+test_domain can parse the domain. You should input the domain to STDIN.
+
+You can extend this code to your program easily. See the main function in test_domain.c as an example.
+
+Author: Weibin Yao
+Email: yaoweibin@gmail.com
